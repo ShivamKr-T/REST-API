@@ -1,11 +1,16 @@
 const express=require('express');
+const fs=require('fs');
 const users=require("./MOCK_DATA.json");
 
 
 const app=express();
 const PORT=8000;
 
-// routes
+// Middlewares
+app.use(express.urlencoded({extended:false}));
+
+
+// Routes
 app.get("/", (req, res) => {
     res.send("Welcome to the API! Visit /users to see the data.");
 });
@@ -47,8 +52,11 @@ app
 // });
 
 app.post("/api/users",(req,res)=>{
-    // todo: Create new user
-    return res.json({status:"pending"});
+    const body=req.body;
+    users.push(body);
+    fs.writeFile('./MOCK_DATA.json',JSON.stringify(users),(err,data)=>{
+        return res.status(201).json({status:"sucess",id:users.length});
+    })
 });
 
 // app.patch("/api/users/:id",(req,res)=>{
