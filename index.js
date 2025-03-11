@@ -6,9 +6,20 @@ const users=require("./MOCK_DATA.json");
 const app=express();
 const PORT=8000;
 
-// Middlewares
+//  *****https://expressjs.com/ -> guide (important)
+// Middleware - Plugin 
 app.use(express.urlencoded({extended:false}));
 
+app.use((res,req,next)=>{
+    console.log("Hello from middleware 1");
+    next();
+})
+
+app.use((res,req,next)=>{
+    console.log(`Hello from middleware 2`);
+    //return res.end("Ended");
+    next();
+})
 
 // Routes
 app.get("/", (req, res) => {
