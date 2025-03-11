@@ -55,7 +55,7 @@ app.post("/api/users",(req,res)=>{
     const body=req.body;
     users.push(body);
     fs.writeFile('./MOCK_DATA.json',JSON.stringify(users),(err,data)=>{
-        return res.status(201).json({status:"sucess",id:users.length});
+        return res.json({status:"sucess",id:users.length});
     })
 });
 
